@@ -9,8 +9,8 @@ import pyvirtualcam
 
 class OpalPipeline:
     def __init__(self):
-        self.input_width = 3840
-        self.input_height = 2160
+        self.input_width = 1920
+        self.input_height = 1080
 
         self.on_new_frame: Optional[Callable[["OpalPipeline"], None]] = None
 
@@ -34,9 +34,11 @@ class OpalPipeline:
         self.cam = self.pipeline.create(dai.node.ColorCamera)
         self.cam.setBoardSocket(dai.CameraBoardSocket.RGB)
         self.cam.setResolution(dai.ColorCameraProperties.SensorResolution.THE_4_K)
+        self.cam.setFps(30)
+
         self.cam.setVideoSize(self.input_width, self.input_height)
         self.cam.setColorOrder(dai.ColorCameraProperties.ColorOrder.BGR)
-        # self.cam.setIspScale(1, 2)
+        self.cam.setIspScale(1, 2)
         self.cam.setInterleaved(False)
 
         self.rgb_stream_name = "rgb"
@@ -87,8 +89,8 @@ class OpalPipeline:
             print('Device name:', device.getDeviceName())
 
             self.control_queue = device.getInputQueue(self.control_in_name)
-            rgb_queue = device.getOutputQueue(name=self.rgb_stream_name, maxSize=4, blocking=False)
-            isp_queue = device.getOutputQueue(name=self.isp_stream_name, maxSize=1, blocking=False)
+            rgb_queue = device.getOutputQueue(name=self.rgb_stream_name, maxSize=30, blocking=False)
+            isp_queue = device.getOutputQueue(name=self.isp_stream_name, maxSize=30, blocking=False)
 
             while self._running_flag:
                 isp_frames: List[dai.ImgFrame] = isp_queue.tryGetAll()
