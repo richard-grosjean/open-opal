@@ -72,13 +72,14 @@ class OpalPipeline:
             self.camera_thread.join(5000)
 
     def _camera_loop(self):
-        with dai.Device(self.pipeline) as device, \
+        with dai.Device(self.pipeline, maxUsbSpeed=dai.UsbSpeed.SUPER_PLUS) as device, \
                 pyvirtualcam.Camera(width=self.input_width, height=self.input_height, fps=30) as uvc:
             self._is_camera_running = True
 
             print('Connected cameras:', device.getConnectedCameraFeatures())
             # Print out usb speed
             print('Usb speed:', device.getUsbSpeed().name)
+            print('Usb speed:', device.getUsbSpeed().value)
             # Bootloader version
             if device.getBootloaderVersion() is not None:
                 print('Bootloader version:', device.getBootloaderVersion())
