@@ -11,7 +11,6 @@ class OpalPipeline:
     def __init__(self):
         self.input_width = 1920
         self.input_height = 1080
-
         self.on_new_frame: Optional[Callable[["OpalPipeline"], None]] = None
 
         # settings
@@ -25,7 +24,7 @@ class OpalPipeline:
         self._auto_white_balance: bool = True
         self._white_balance: int = 1000
 
-        self._flip_channels: bool = False
+        self._flip_channels: bool = True
 
         # pipeline
         self.pipeline = dai.Pipeline()

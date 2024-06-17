@@ -16,6 +16,7 @@ class ControlUI:
         self.gui: Optional[ng.FormHelper] = None
 
         self.pipeline = OpalPipeline()
+        self._initSettingsOnce: bool = True
         self.pipeline.on_new_frame = self._on_new_frame
 
     def run(self):
@@ -46,6 +47,12 @@ class ControlUI:
 
     def _on_new_frame(self, pipeline: OpalPipeline):
         self.gui.refresh()
+        if self._initSettingsOnce:
+            self.pipeline.set_auto_focus(False)
+            self.pipeline.set_manual_lens_pose(142)
+            self.pipeline.set_auto_white_balance(False)
+            self.pipeline.set_white_balance(2960)
+            self._initSettingsOnce = False
 
     def _on_resize(self, *args):
         self.window.set_width(self.screen.width())
