@@ -51,7 +51,10 @@ class ControlUI:
             self.pipeline.set_auto_focus(False)
             self.pipeline.set_manual_lens_pose(142)
             self.pipeline.set_auto_white_balance(False)
-            self.pipeline.set_white_balance(2960)
+            self.pipeline.set_white_balance(3200)
+            self.pipeline.set_auto_exposure(False)
+            self.pipeline.set_exposure(29900)
+            #self.pipieline.set_iso_sensitivity(1400)
             self._initSettingsOnce = False
 
     def _on_resize(self, *args):
