@@ -17,6 +17,9 @@ Open Opal should automatically (thanks to pyvirtualcam) pick the Unity Capture c
 
 I recommend using pyenv with Python 3.8.10.
 
+pyenv install 3.8.10
+pyenv local 3.8.10
+
 ```bash
 pip install -r requirements.txt
 ```
